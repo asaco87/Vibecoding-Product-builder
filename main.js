@@ -16,15 +16,25 @@ function generateLottoNumbers() {
 }
 
 function toggleTheme() {
-  document.body.classList.toggle('dark-mode');
-  const theme = document.body.classList.contains('dark-mode') ? 'dark' : 'light';
+  const isDark = document.body.classList.toggle('dark-mode');
+  const theme = isDark ? 'dark' : 'light';
   localStorage.setItem('theme', theme);
+  updateThemeButtonText(isDark);
+}
+
+function updateThemeButtonText(isDark) {
+  const btn = document.getElementById('theme-toggle');
+  if (btn) {
+    btn.textContent = isDark ? 'White Mode' : 'Dark Mode';
+  }
 }
 
 // Apply theme on load
 (function() {
   const savedTheme = localStorage.getItem('theme');
-  if (savedTheme === 'dark') {
+  const isDark = savedTheme === 'dark';
+  if (isDark) {
     document.body.classList.add('dark-mode');
   }
+  updateThemeButtonText(isDark);
 })();
